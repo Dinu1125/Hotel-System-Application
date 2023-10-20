@@ -1,0 +1,69 @@
+package hotel;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+/**
+ * Servlet implementation class UpdateRoomServlert
+ */
+@WebServlet("/UpdateRoomServlert")
+public class UpdateRoomServlert extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UpdateRoomServlert() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out =response.getWriter();
+		response.setContentType("text/html");
+		
+		String roomID = request.getParameter("roomID");
+		String roomType = request.getParameter("roomType");
+		String status = request.getParameter("status");
+		
+		
+			boolean isTrue;
+			
+			isTrue = hotelDButill.updaterooms(roomID, roomType, status);
+			
+			if(isTrue == true) {
+				out.println("<script type='text/javascript'>");
+				out.println("alert('Room Updated!');");
+				out.println("location='SelectEdit.jsp'");
+				out.println("</script>");
+			} 
+			else
+			{
+				RequestDispatcher dis2 = request.getRequestDispatcher("unsuccess.jsp");
+				dis2.forward(request, response);
+			}
+		
+	}
+
+}
